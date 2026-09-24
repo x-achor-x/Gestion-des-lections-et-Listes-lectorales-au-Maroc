@@ -42,8 +42,13 @@ vous n’avez pas le droit de modifier votre vote ni de voter à nouveau”
 ● Rechercher un candidat par son Nom.
 
 8. Statistiques de l'élection :
+
 ● Afficher le nombre total de candidats.
+
 ● Afficher le nombre total de votes exprimés dans toute l'élection.
+
 ● Afficher le Top 3 des candidats ayant le plus de votes.
+
 ● Afficher le nombre de candidats par parti politique.
+
 N.B : L’utilisateur doit revenir au menu principal après chaque opération.
