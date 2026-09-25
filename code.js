@@ -9,6 +9,8 @@ const couleurs = {
     gras: "\x1b[1m",      // Rend le texte plus épais (bold)
 };
 
+
+
 const prompt = require("prompt-sync")();
 
 let data =
@@ -95,31 +97,35 @@ let data =
     }
 ];
 
-//var ask = Number(prompt(" Veuillez saisir votre choix : "));
-console.log(`
-                                ⟹⟹⟹⟹⟹⟹⟹⟹⟹   GESTION DES ELECTIONS  ⟸⟸⟸⟸⟸⟸⟸⟸⟸⟸
+function show() { 
+		console.log(`
+			⟹⟹⟹⟹⟹⟹⟹⟹⟹ GESTION DES ELECTIONS ⟸⟸⟸⟸⟸⟸⟸⟸⟸⟸
 
-                                1   ➩    Ajouter un nouveau candidat
-                                2   ➩    Ajouter plusieurs candidats à la fois
-                                3   ➩    Afficher la liste des candidats
-                                4   ➩    Voter pour un candidat
-                                5   ➩    Modifier les informations d'un candidat
-                                6   ➩    Supprimer un candidat
-                                7   ➩    Rechercher des candidats
-                                8   ➩    Statistiques de l'élection
+			1 ➩ Ajouter un nouveau candidat
+			2 ➩ Ajouter plusieurs candidats à la fois
+			3 ➩ Afficher la liste des candidats
+			4 ➩ Voter pour un candidat
+			5 ➩ Modifier les informations d'un candidat
+			6 ➩ Supprimer un candidat
+			7 ➩ Rechercher des candidats
+			8 ➩ Statistiques de l'élection
+			0 ➩ Quitter 
+		`);
 
-
-
-                                ` );
-
-var ask = Number(prompt(" Veuillez saisir votre choix : "));
-
+}
 function choix() 
 {
+	let ask ;
 	do
 	{
+		show();
+		ask = Number(prompt(" Veuillez saisir votre choix : "));
+		
 		switch(ask)
 		{
+			case 0 :
+                                quitter();
+                                break;
 			case 1 : 
 				ajouter_un_nouveau_candidat();
 				break ;
@@ -147,45 +153,84 @@ function choix()
 			default :
 				console.log( ` pardon ! votre choix n'est pas exister ` );
 		}
-	}while ( ask !== 0)
+	} while ( ask !== 0) ;
 }
 
-function ajouter_un_nouveau_candidat()
+
+
+function quitter() 
 {
-    let cin = prompt("Enter ur cin : ");
-    let nom = prompt("Enter ur last name : ");
-    let prenom = prompt("Enter ur first name : ");
-    let partiPolitique = prompt("");
-    let age = Number(prompt("Enter ur age :"));
+    console.log(" Merci Pour Votre Visite");
+}
 
-    let candidat =
-    {
-        cin: cin,
-        nom: nom,
-        prenom: prenom,
-        partiPolitique: partiPolitique,
-        age: age,
-        electeurs: []
-    };
+/*function alreadyexist(cin) 
+{	for (let one of data) 
+	{	
+		if (one.cin === cin)
+		{	console.log(couleurs.rouge, " Ce CIN existe déjà !");
+			return true;
+		}
+	}
+	return false;
+}*/
 
-    data.push(candidat);
+
+function  ajouter_un_nouveau_candidat()
+{
+	let cin = prompt(" Entrez votre cin : ");
+
+	for (let i = 0; i < data.length; i++)
+	{
+		if (data[i].cin === cin)
+		{
+			console.log(couleurs.rouge, "Ce CIN existe déjà !");
+			return;
+		}
+	}
+
+
+
+    let nom = prompt(" Entrez votre nom : ");
+    let prenom = prompt(" Entrez votre prenom : ");
+    let partiPolitique = prompt(" Entrez votre parti politique : ");
+    let age = Number(prompt(" Entrez votre âge : "));
+
+	let candidat =
+	{
+		cin: cin,
+		nom: nom,
+		prenom: prenom,
+		partiPolitique: partiPolitique,
+		age: age,
+		electeurs: []
+	};
+	data.push(candidat);
+}
+
+    //data.push(candidat);
+
+
+function ajouter_plusieurs_candidats_à_la_fois()
+{
+	let ask2 = Number(prompt(" Combien de candidats souhaitez-vous ajouter ? "));
+	for (let i = 0; i < ask2; i++)
+	{
+		console.log((i + 1), "/", ask2);
+		ajouter_un_nouveau_candidat();
+	}
+}
+
+
+
+function afficher_la_liste_des_candidats()
+{
+	
+
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+choix();
 
 
