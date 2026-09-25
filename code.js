@@ -9,7 +9,17 @@ const couleurs = {
     gras: "\x1b[1m",      // Rend le texte plus épais (bold)
 };
 
-
+/*
+function lala(arr)
+{
+	//var long = 0;
+	while(arr[data] !== undefined )
+	{
+		data++;
+	}
+	return data;
+}
+*/
 
 const prompt = require("prompt-sync")();
 
@@ -21,7 +31,7 @@ let data =
         prenom: "Soufiane",
         partiPolitique: "Indépendant",
         age: 40,
-        electeurs: []
+        electeurs: [ "SA123456" , "SB123456" , "SC123456" , "SD123456" , "SE123456" , "SF123456" ]
     },
     {
         cin: "AC123456",
@@ -29,7 +39,7 @@ let data =
         prenom: "Sara",
         partiPolitique: "Indépendant",
         age: 35,
-        electeurs: []
+        electeurs: [ "SG123456" , "SH123456" ]
     },
     {
         cin: "AD123456",
@@ -45,37 +55,37 @@ let data =
         prenom: "Nadia",
         partiPolitique: "Indépendant",
         age: 38,
-        electeurs: []
+        electeurs: [ "SJ123456" , "SI123456" , "SK123456" , "SL123456" ]
     },
     {
         cin: "AF123456",
         nom: "Bennani",
         prenom: "Omar",
-        partiPolitique: "Parti X",
+        partiPolitique: "PAM",
         age: 45,
-        electeurs: []
+        electeurs: [ "SM123456" ]
     },
     {
         cin: "AG123456",
         nom: "Fassi",
         prenom: "Imane",
-        partiPolitique: "Parti Y",
+        partiPolitique: "RNI",
         age: 32,
-        electeurs: []
+        electeurs: [ "SN123456" , "SO123456" , "SP123456" ]
     },
     {
         cin: "AH123456",
         nom: "Tazi",
         prenom: "Hamza",
-        partiPolitique: "Parti Z",
+        partiPolitique: "MDS",
         age: 41,
-        electeurs: []
+        electeurs: [ "ST123456" , "SS123456" ]
     },
     {
         cin: "AI123456",
         nom: "Chraibi",
         prenom: "Salma",
-        partiPolitique: "Indépendant",
+        partiPolitique: "AG",
         age: 36,
         electeurs: []
     },
@@ -83,7 +93,7 @@ let data =
         cin: "AJ123456",
         nom: "Benali",
         prenom: "Ayoub",
-        partiPolitique: "Parti Z",
+        partiPolitique: "GB",
         age: 39,
         electeurs: []
     },
@@ -91,11 +101,23 @@ let data =
         cin: "AK123456",
         nom: "Mansouri",
         prenom: "Meryem",
-        partiPolitique: "Parti X",
+        partiPolitique: "RNI",
         age: 34,
         electeurs: []
     }
 ];
+
+function lala(arr)
+{
+        //var long = 0;
+        while(arr[data] !== undefined )
+        {
+                data++;
+        }
+        return data;
+}
+
+
 
 function show() { 
 		console.log(`
@@ -157,22 +179,10 @@ function choix()
 }
 
 
-
 function quitter() 
 {
     console.log(" Merci Pour Votre Visite");
 }
-
-/*function alreadyexist(cin) 
-{	for (let one of data) 
-	{	
-		if (one.cin === cin)
-		{	console.log(couleurs.rouge, " Ce CIN existe déjà !");
-			return true;
-		}
-	}
-	return false;
-}*/
 
 
 function  ajouter_un_nouveau_candidat()
@@ -190,10 +200,10 @@ function  ajouter_un_nouveau_candidat()
 
 
 
-    let nom = prompt(" Entrez votre nom : ");
-    let prenom = prompt(" Entrez votre prenom : ");
-    let partiPolitique = prompt(" Entrez votre parti politique : ");
-    let age = Number(prompt(" Entrez votre âge : "));
+	let nom = prompt(" Entrez votre nom : ");
+	let prenom = prompt(" Entrez votre prenom : ");
+	let partiPolitique = prompt(" Entrez votre parti politique : ");
+	let age = Number(prompt(" Entrez votre âge : "));
 
 	let candidat =
 	{
@@ -220,17 +230,61 @@ function ajouter_plusieurs_candidats_à_la_fois()
 	}
 }
 
-
-
 function afficher_la_liste_des_candidats()
 {
-	
+	console.log(`
+		1 ➩ Afficher tous les candidats
+		2 ➩ Trier par nombre de votes
+		3 ➩ Afficher par parti
+			`);
 
+	let ask3 = Number(prompt("Enter ur number : "));
+
+	if(ask3 === 1)
+	{
+		console.table(data);
+	}
+
+	else if(ask3 === 2)
+	{
+		for(let i = 0; i < data.length - 1; i++)
+		{
+			for(let j = 0; j < data.length - 1 - i; j++)
+			{
+				if(data[j].electeurs.length < data[j+1].electeurs.length)
+				{
+					let cup = data[j];
+					data[j] = data[j+1];
+					data[j+1] = cup;
+				}
+			}
+		}
+
+		for(let i = 0; i < data.length; i++)
+		{
+			console.log(data[i].nom, "→", data[i].electeurs.length, "votes");
+		}
+	}
+
+	else if(ask3 === 3)
+	{
+		for(let i = 0; i < data.length; i++)
+		{
+			if ( data[i].partiPolitique != "Indépendant" )
+			{
+				console.log(
+				data[i].partiPolitique,
+				"→",
+				data[i].nom,
+				data[i].prenom,
+				"→",
+				data[i].electeurs.length,
+				"votes"
+				);
+			}
+		}
+	}
 }
 
-
-
-
 choix();
-
 
