@@ -121,7 +121,7 @@ function lala(arr)
 
 function show() { 
 		console.log(`
-			⟹⟹⟹⟹⟹⟹⟹⟹⟹ GESTION DES ELECTIONS ⟸⟸⟸⟸⟸⟸⟸⟸⟸⟸
+			========== GESTION DES ELECTIONS ==========
 
 			1 ➩ Ajouter un nouveau candidat
 			2 ➩ Ajouter plusieurs candidats à la fois
@@ -287,8 +287,11 @@ function afficher_la_liste_des_candidats()
 
 function voter_pour_un_candidat()
 {
+	//cin = l itilisator
 	let cin = prompt(" Entrez votre cin : ");
+	//declared = wax lmosawit kayn f data.cin
 	let declared_cin = false ;
+	// already_voted = wax fayt mswt o kayn f data.electuers
 	let already_voted = false ;
 
 	for (let i = 0; i < data.length; i++)
@@ -375,12 +378,140 @@ function  modifier_les_informations()
 			else
 			{
 				console.log("Choix invalide.");
+
 			}
 		}
 	}
 	if (existe === false)
 	{
 		console.log("Ce candidat n'existe pas.");
+	}
+}
+
+function supprimer( cup , i) 
+{
+
+    for (i ; i < cup.length; i++) {
+      cup[i] = cup[i + 1]
+    }
+    cup.length -= 1;
+    return(cup)
+}
+
+function supprimer_un_candidat()
+{
+    const cin = prompt("Entrez votre cin : ");
+
+    for (let i = 0; i < data.length; i++)
+    {
+        if (data[i].cin === cin)
+        {
+            let ask2 = prompt(
+                "Voulez-vous supprimer ce candidat ?\n1- Oui\n2- Non"
+            );
+
+            switch(ask2)
+            {
+                case "1":
+                    supprimer(data, i);
+                    break;
+
+                case "2":
+                    console.log("Suppression annulée");
+                    break;
+            }
+
+            return;
+        }
+    }
+
+    console.log("Ce candidat n'existe pas");
+}
+
+function rechercher_des_candidats()
+{
+	let	ask = prompt(" Enter votre nom : ").toLowerCase();
+	for (let i = 0 ; i < data.length ; i++ )
+	{
+		if(data[i].nom.toLowerCase() === ask)
+		{
+			console.log(data[i]);
+			return ;
+		}
+
+	}console.log("cet nom n'existe pas ");
+}
+
+function statistiques()
+{
+	console.log(`
+                        ========== STATISTIQUES ==========
+
+                        1 ➩ Nombre total de candidats
+                        2 ➩ Nombre total de votes
+                        3 ➩ Top 3 des candidats
+                        4 ➩ Nombre de candidats par parti
+			`);
+
+	let ask = Number(prompt(" Entrez votre choix : "));
+	switch(ask)
+	{
+		case 1 :
+			console.log("Nombre du candidats : " , data.length);
+			break;
+		case 2 :
+			let votes = 0 ;
+			for(let i = 0 ; i < data.length ; i++ )
+			{
+				votes = votes + data[i].electeurs.length ;
+			}
+			console.log( "Nomber total de votes : " , votes );
+			break;
+		case 3 :
+			for ( let i = 0 ; i < data.length - 1 ; i++ )
+			{
+				for ( let j = 0 ; j < data.length - 1 -i ; j++ )
+				{
+					if ( data[j].electeurs.length <  data[j+1].electeurs.length )
+					{
+						let cup = data[j];
+						data[j] = data[j+1];
+						data[j+1] = cup ;
+					}
+				}
+			}
+
+			console.log("\n                           ========== TOP 3 ==========                          \n");
+			for ( let i = 0 ; i < 3 && i < data.length ; i++ )
+			{
+				console.log("                            " , (i + 1) + " → " + data[i].nom + " " + data[i].prenom,"\n                                  " + data[i].electeurs.length + " votes\n" );
+			}
+			break;
+		case 4 :
+			for(let i = 0; i < data.length; i++)
+			{
+				let existe = false;
+				for(let j = 0; j < i; j++)
+				{
+					if(data[i].partiPolitique === data[j].partiPolitique)
+					{
+						existe = true;
+					}
+				}
+				if(existe === false)
+				{
+					let nombre = 0;
+					for(let j = 0; j < data.length; j++)
+					{
+						if(data[i].partiPolitique === data[j].partiPolitique)
+						{
+							nombre++;
+						}
+					}
+					console.log(data[i].partiPolitique, "→", nombre, "candidat(s)");
+				}
+			}
+			break;
 	}
 }
 
