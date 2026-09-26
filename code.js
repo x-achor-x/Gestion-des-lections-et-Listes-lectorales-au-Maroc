@@ -106,7 +106,7 @@ let data =
         electeurs: []
     }
 ];
-
+/*
 function lala(arr)
 {
         //var long = 0;
@@ -115,7 +115,7 @@ function lala(arr)
                 data++;
         }
         return data;
-}
+}*/
 
 
 
@@ -235,7 +235,7 @@ function afficher_la_liste_des_candidats()
 	console.log(`
 		1 ➩ Afficher tous les candidats
 		2 ➩ Trier par nombre de votes
-		3 ➩ Afficher par parti
+		3 ➩ Afficher par parti politique
 			`);
 
 	let ask3 = Number(prompt("Enter ur number : "));
@@ -262,10 +262,9 @@ function afficher_la_liste_des_candidats()
 
 		for(let i = 0; i < data.length; i++)
 		{
-			console.log(data[i].nom, "→", data[i].electeurs.length, "votes");
+			console.log ( data[i].nom,  data[i].prenom , "→", data[i].electeurs.length, "votes");
 		}
 	}
-
 	else if(ask3 === 3)
 	{
 		for(let i = 0; i < data.length; i++)
@@ -286,5 +285,105 @@ function afficher_la_liste_des_candidats()
 	}
 }
 
+function voter_pour_un_candidat()
+{
+	let cin = prompt(" Entrez votre cin : ");
+	let declared_cin = false ;
+	let already_voted = false ;
+
+	for (let i = 0; i < data.length; i++)
+	{
+		if (data[i].cin === cin)
+		{
+			declared_cin = true ;
+		}
+
+	for (let j = 0; j < data[i].electeurs.length; j++)
+	{
+		if (data[i].electeurs[j] === cin)
+		{
+			already_voted = true;
+		}
+	}
+	}
+
+	if (declared_cin === false )
+	{
+		console.log(" Cet électeur n'existe pas ");
+	}
+	else if ( already_voted === true)
+	{
+		console.log("Vous avez déjà voté et vous n’avez pas le droit de modifier votre vote ni de voter à nouveau");
+	}
+	else
+	{
+		let voting_on = prompt("Entrez la cin du candidat pour lequel vous voulez voter : ");
+		let voter_existe = false;
+
+		for (let i = 0; i < data.length; i++)
+		{
+			if (data[i].cin === voting_on )
+			{
+				voter_existe = true;
+			}
+		}
+		if ( voter_existe === false)
+		{
+			console.log( "Ce candidat n'existe pas ");
+		}
+		else if (cin === voting_on )
+		{
+			console.log("Vous ne pouvez pas voter pour vous-même ");
+		}
+		else
+		{
+			for (let i = 0; i < data.length; i++)
+			{
+				if (data[i].cin === voting_on )
+				{
+					data[i].electeurs.push(cin);
+				}
+			}
+			console.log("Vous avez voté pour le candidat " + voting_on );
+		}
+	}
+}
+
+function  modifier_les_informations()
+{
+	let cin = prompt("Entrez la CIN du candidat : ");
+	let existe = true;
+	for (let i = 0; i < data.length; i++)
+	{
+		if (data[i].cin === cin)
+		{
+			existe = true;
+			let choix = Number(prompt(
+    "Qu'est-ce que vous voulez modifier ?\n1 - Age\n2 - Parti politique\nVotre choix : " ));
+			if (choix === 1)
+			{
+				let age = parseInt(prompt(" Entrez le nouvel age : "));
+				data[i].age = age;
+				console.log("L'âge a été modifié.");
+			}
+			else if (choix === 2)
+			{
+				let parti = prompt("Entrez le nouveau parti politique : ");
+				data[i].partiPolitique = parti;
+				console.log("Le parti politique a été modifié.");
+			}
+			else
+			{
+				console.log("Choix invalide.");
+			}
+		}
+	}
+	if (existe === false)
+	{
+		console.log("Ce candidat n'existe pas.");
+	}
+}
+
 choix();
+
 
