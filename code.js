@@ -72,7 +72,7 @@ let data =
 		prenom: "Ayoub",
 		partiPolitique: "GB",
 		age: 39,
-		electeurs: []
+		electeurs: [ "KL852366" , "AZ456321" , "YU456321"  , "OP523698" , "ER785214" , "AS452178" , "FG452178" , "af123654" ,"HI4563214"]
 	},
 	{
 		cin: "AK123456",
@@ -228,28 +228,32 @@ function afficher_la_liste_des_candidats()
 
 
 		case 2:
-
-			for(let i = 0; i < data.length - 1; i++)
+			let data_copy = []
+			for (copy of data )
 			{
-				for(let j = 0; j < data.length - 1 - i; j++)
+				data_copy.push(copy)
+			}
+			for(let i = 0; i < data_copy.length - 1; i++)
+			{
+				for(let j = 0; j < data_copy.length - 1 - i; j++)
 				{
-					if(data[j].electeurs.length < data[j + 1].electeurs.length)
+					if(data_copy[j].electeurs.length < data_copy[j + 1].electeurs.length)
 					{
-						let cup = data[j];
+						let cup = data_copy[j];
 
-						data[j] = data[j + 1];
-						data[j + 1] = cup;
+						data_copy[j] = data_copy[j + 1];
+						data_copy[j + 1] = cup;
 					}
 				}
 			}
 
-			for(let i = 0; i < data.length; i++)
+			for(let i = 0; i < data_copy.length; i++)
 			{
 				console.log(
-					data[i].nom,
-					data[i].prenom,
+					data_copy[i].nom,
+					data_copy[i].prenom,
 					"→",
-					data[i].electeurs.length,
+					data_copy[i].electeurs.length,
 					"votes"
 				);
 			}
